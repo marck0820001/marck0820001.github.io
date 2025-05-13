@@ -124,7 +124,7 @@ img {
 .btn-secondary {
   background-color: var(--secondary-color);
   color: #fff;
-   border: 2px solid var(--secondary-color);
+    border: 2px solid var(--secondary-color);
 }
 .btn-secondary:hover {
   background-color: #117a8b;
@@ -153,7 +153,7 @@ header {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 1000; /* Asegúrate que el header esté sobre el contenido pero debajo del lightbox */
   box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
@@ -229,13 +229,15 @@ header .container {
   background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('../images/hero-bg.jpg') no-repeat center center/cover; /* Reemplaza hero-bg.jpg o usa un color */
   background-color: var(--dark-color); /* Fallback si la imagen no carga */
   color: #fff;
-  height: 100vh;
+  min-height: 100vh; /* Usar min-height para asegurar que cubra la pantalla */
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 80px; /* Ajuste por header fijo */
+  padding-top: 70px; /* Ajuste por header fijo, debe coincidir con la altura del header */
+  box-sizing: border-box; /* Para que el padding no incremente la altura total */
 }
+
 
 .hero-content h1 {
   font-size: 3.5rem;
@@ -295,9 +297,11 @@ header .container {
   margin-top: 30px;
   display: flex;
   gap: 30px;
+  flex-wrap: wrap; /* Para que se ajusten en pantallas pequeñas */
 }
 .info-item {
-  flex-basis: 50%;
+  flex-basis: calc(50% - 15px); /* Ajuste para el gap */
+  min-width: 250px; /* Para que no se encojan demasiado */
 }
 .info-item h3 {
   font-size: 1.3rem;
@@ -347,8 +351,8 @@ header .container {
 }
 .skill-category ul li::before {
   content: '\f00c'; /* Font Awesome check icon */
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 900;
+  font-family: 'Font Awesome 6 Free'; /* Asegúrate que coincida con la versión de FA */
+  font-weight: 900; /* Necesario para los iconos sólidos de FA6 */
   color: var(--secondary-color);
   position: absolute;
   left: 0;
@@ -385,7 +389,7 @@ header .container {
 
 .proyecto-info, .dashboard-info {
   padding: 25px;
-  flex-grow: 1; /* Para que el contenido ocupe espacio y los links queden abajo */
+  flex-grow: 1; 
   display: flex;
   flex-direction: column;
 }
@@ -396,16 +400,20 @@ header .container {
 .proyecto-info p, .dashboard-info p {
   font-size: 0.95rem;
   margin-bottom: 10px;
-  flex-grow: 1; /* Para que la descripción ocupe espacio */
+  /* flex-grow: 1; */ /* Comentado o ajustado para evitar que la descripción empuje demasiado */
 }
+.proyecto-info p:last-of-type, .dashboard-info p:last-of-type {
+    margin-bottom: 15px; /* Más espacio antes de los links o galería */
+}
+
 .proyecto-info p strong, .dashboard-info p strong {
   color: var(--text-color);
   font-weight: 600;
 }
 
 .proyecto-links {
-  margin-top: auto; /* Empuja los links al final de la tarjeta */
-  padding-top: 15px; /* Espacio antes de los links */
+  margin-top: auto; 
+  padding-top: 15px; 
   border-top: 1px solid #eee;
 }
 .btn-link {
@@ -416,7 +424,7 @@ header .container {
   border-radius: 5px;
   font-size: 0.85rem;
   margin-right: 10px;
-  margin-bottom: 5px; /* Para multiline */
+  margin-bottom: 5px; 
 }
 .btn-link:hover {
   background-color: #0056b3;
@@ -429,14 +437,16 @@ header .container {
   font-size: 0.8rem;
   color: var(--text-muted);
   margin-top: 5px;
+  margin-bottom: 0; /* Quitar margen inferior si es el último elemento */
 }
 
 /* Dashboard Gallery */
 .dashboard-gallery {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr); /* Dos imágenes por fila por defecto */
   gap: 10px;
-  padding: 0 25px 25px; /* Padding inferior y laterales */
+  padding: 0 25px 25px; 
+  margin-top: auto; /* Para empujar la galería hacia abajo si el texto es corto */
 }
 .dashboard-gallery img {
   width: 100%;
@@ -444,7 +454,12 @@ header .container {
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   object-fit: cover;
-  aspect-ratio: 16/10; /* Para que mantengan proporción */
+  aspect-ratio: 16/10; 
+  cursor: pointer; /* Añadido para el lightbox */
+  transition: opacity 0.3s ease; /* Añadido para el lightbox */
+}
+.dashboard-gallery img:hover {
+    opacity: 0.7; /* Añadido para el lightbox */
 }
 
 
@@ -487,7 +502,7 @@ footer {
   color: rgba(255,255,255,0.7);
   text-align: center;
   padding: 25px 0;
-  margin-top: 60px;
+  margin-top: 60px; /* Opcional, si quieres espacio antes del footer */
 }
 footer p {
   margin-bottom: 0;
@@ -505,7 +520,7 @@ footer p {
   opacity: 1;
   transform: translateY(0);
 }
-.animate-on-scroll.fade-in {  transform: translateY(0); } /* Solo fade */
+.animate-on-scroll.fade-in {  transform: translateY(0); } 
 .animate-on-scroll.fade-in-up { transform: translateY(30px); }
 .animate-on-scroll.fade-in-left { opacity: 0; transform: translateX(-50px); }
 .animate-on-scroll.fade-in-right { opacity: 0; transform: translateX(50px); }
@@ -523,37 +538,113 @@ footer p {
 .delay-4 { transition-delay: 0.4s !important; }
 
 
+/* ESTILOS PARA EL LIGHTBOX (AÑADIDOS) */
+.lightbox {
+    display: none; 
+    position: fixed; 
+    z-index: 1001; /* Más alto que el header */
+    padding-top: 60px; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.9); 
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    width: auto; 
+    max-width: 85%; 
+    max-height: 80vh; /* Ajustado para dejar espacio para el caption y el botón de cerrar */
+    animation-name: zoom;
+    animation-duration: 0.4s;
+}
+
+@keyframes zoom {
+    from {transform: scale(0.5); opacity: 0;}
+    to {transform: scale(1); opacity: 1;}
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus {
+    color: #bbb;
+    text-decoration: none;
+}
+
+#lightbox-caption {
+    margin: 15px auto; /* Espacio arriba y abajo */
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 0 10px; /* Evita que el texto toque los bordes */
+    font-size: 0.9rem;
+    line-height: 1.4;
+    min-height: 20px; /* Asegura algo de espacio incluso si no hay caption */
+}
+
+
 /* Responsive Design */
 @media (max-width: 992px) {
   .hero-content h1 { font-size: 2.8rem; }
   .hero-content .subtitle { font-size: 1.3rem; }
   .sobre-mi-content { flex-direction: column; align-items: center; text-align: center; }
   .sobre-mi-img { margin-bottom: 30px; max-width: 300px;}
-  .info-adicional { flex-direction: column; text-align: left;}
+  .info-adicional { flex-direction: column; text-align: left;} /* Cambiado a left para mejor lectura */
+  .info-item { flex-basis: 100%;}
 }
 
 @media (max-width: 768px) {
   html { font-size: 15px; }
   .nav-links {
-      display: none;
+      display: none; /* Inicialmente oculto */
       flex-direction: column;
       width: 100%;
       position: absolute;
-      top: 65px; /* Ajusta según la altura de tu header */
+      top: 100%; /* Se alinea debajo del header */
       left: 0;
       background-color: #fff;
       box-shadow: 0 5px 10px rgba(0,0,0,0.1);
       padding-bottom: 10px;
+      border-top: 1px solid #eee; /* Línea divisoria */
   }
-  .nav-links.active {
+  .nav-links.active { /* Se muestra cuando el menú está activo */
       display: flex;
   }
   .nav-links li {
-      margin: 10px 0;
-      text-align: center;
+      margin: 0; /* Quitar margen izquierdo */
+      width: 100%; /* Ocupar todo el ancho */
   }
+  .nav-links li a {
+      display: block; /* Convertir en bloque para padding y centrado */
+      padding: 12px 20px; /* Padding para mejor toque */
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0; /* Separadores entre items */
+  }
+  .nav-links li:last-child a {
+      border-bottom: none; /* Sin borde en el último item */
+  }
+  .nav-links a::after { /* Ocultar subrayado en móvil o ajustar */
+      display: none;
+  }
+
+
   .menu-toggle {
-      display: block;
+      display: block; /* Mostrar el botón de hamburguesa */
   }
   .menu-toggle.active .bar:nth-child(2) {
       opacity: 0;
@@ -575,14 +666,29 @@ footer p {
   .skills-grid, .proyectos-grid, .dashboards-grid {
       grid-template-columns: 1fr; /* Una columna en móviles */
   }
-  .dashboard-gallery { grid-template-columns: 1fr; } /* Dashboards una sola imagen debajo de otra */
-  .dashboard-gallery img { aspect-ratio: auto; } /* Resetea aspect ratio si se ven mal */
+  .dashboard-gallery { 
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ajuste para galería en móvil */
+    /* O si prefieres una sola imagen por fila en móviles: */
+    /* grid-template-columns: 1fr; */
+  } 
+  .dashboard-gallery img { aspect-ratio: auto; }
 
   .contacto-links { flex-direction: column; gap: 15px; }
-  .contacto-link { width: 100%; text-align: center; }
+  .contacto-link { width: 100%; text-align: center; max-width: 350px; margin: 0 auto;}
+
+  /* Lightbox en móviles */
+  .lightbox-content {
+        max-width: 95%;
+        max-height: 75vh; /* Un poco menos de altura para mejor visualización */
+  }
+  #lightbox-caption {
+        width: 90%;
+        font-size: 0.85rem;
+  }
 }
 
 @media (max-width: 480px) {
   .hero-content h1 { font-size: 2rem; }
-  .dashboard-gallery { grid-template-columns: 1fr; }
+  .dashboard-gallery { grid-template-columns: 1fr; } /* Una sola imagen por fila definitivo */
+  .hero-section { padding-top: 60px; } /* Ajustar si la altura del header cambia */
 }
